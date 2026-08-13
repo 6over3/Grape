@@ -93,6 +93,7 @@ extension ForceDirectedGraphModel: _AnyGraphProxyProtocol {
             yield &simulationContext.storage.kinetics.alpha
         }
     }
+
 }
 
 public struct ObsoleteState {
@@ -411,6 +412,11 @@ extension ForceDirectedGraphModel {
             currentFrame += 1
         }
         _onTicked?(currentFrame)
+        if simulationContext.storage.kinetics.alpha < simulationContext.storage.kinetics.alphaMin {
+            stop()
+            stateMixinRef.isRunning = false
+            _onSimulationStabilized?()
+        }
     }
 
     @inlinable
