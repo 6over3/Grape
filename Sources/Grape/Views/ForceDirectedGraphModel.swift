@@ -351,7 +351,6 @@ public final class ForceDirectedGraphModel<NodeID: Hashable> {
 
     @inlinable
     deinit {
-        print("deinit")
 
         let _ = MainActor.assumeIsolated {
             scheduledTimer?.invalidate()
@@ -389,7 +388,6 @@ extension ForceDirectedGraphModel {
     @inlinable
     func start(minAlpha: Double = 0.6) {
         guard self.scheduledTimer == nil else { return }
-        print("Simulation started")
         if simulationContext.storage.kinetics.alpha < minAlpha {
             simulationContext.storage.kinetics.alpha = minAlpha
         }
@@ -417,7 +415,6 @@ extension ForceDirectedGraphModel {
 
     @inlinable
     func stop() {
-        print("Simulation stopped")
         self.scheduledTimer?.invalidate()
         self.scheduledTimer = nil
     }
@@ -783,9 +780,6 @@ extension ForceDirectedGraphModel {
                 count: self.simulationContext.storage.kinetics.position.count
             )
         }
-        debugPrint(
-            "Graph state revived. Note this might cause expensive rerendering when combined with `annotation` with non-text views and unstable id."
-        )
     }
 
 }
